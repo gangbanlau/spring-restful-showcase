@@ -12,11 +12,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
@@ -52,4 +54,33 @@ private static final Logger logger = LoggerFactory.getLogger(ProductControllerTe
 		}
 	}
 	
+	@Test
+	public void testPutProduct() {
+		try {
+			this.mockMvc.perform(MockMvcRequestBuilders.put("/products/1").contentType(MediaType.APPLICATION_JSON).content("{\"id\":1,\"name\":\"Lamp@@@@\",\"price\":6.30,\"description\":null}")
+					);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void testDeleteProduct() {
+		try {
+			this.mockMvc.perform(MockMvcRequestBuilders.delete("/products/1").contentType(MediaType.APPLICATION_JSON)
+					);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void testGetOneProduct() {
+		try {
+			this.mockMvc.perform(MockMvcRequestBuilders.get("/products/6")
+					);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 }

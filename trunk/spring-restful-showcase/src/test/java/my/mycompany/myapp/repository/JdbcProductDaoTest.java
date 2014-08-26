@@ -1,8 +1,12 @@
 package my.mycompany.myapp.repository;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
 import java.util.List;
 
 import junit.framework.Assert;
+import my.mycompany.myapp.domain.Product;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -10,20 +14,17 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import static org.junit.Assert.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.test.context.transaction.TransactionConfiguration;
-import org.springframework.test.context.transaction.AfterTransaction;
-import org.springframework.test.context.transaction.BeforeTransaction;
-import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.transaction.AfterTransaction;
+import org.springframework.test.context.transaction.BeforeTransaction;
+import org.springframework.test.context.transaction.TransactionConfiguration;
+import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
-
-import my.mycompany.myapp.domain.Product;
-import my.mycompany.myapp.repository.IProductDao;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
@@ -112,13 +113,13 @@ public class JdbcProductDaoTest {
 	@Test
 	public void testInsert() {
 		Product prod = new Product();
-		prod.setName("Train");
+		prod.setName("train");
 		prod.setPrice(2999D);
 		prod = productDao.insert(prod);
 		/*
 		 * failed if using mysql db and we run test case twice after new table
 		 */
-		//Assert.assertEquals("insert fail?", 4, prod.getId().longValue());
+		Assert.assertEquals("insert fail?", 12, prod.getId().longValue());
 	}
 	
 	@Test
